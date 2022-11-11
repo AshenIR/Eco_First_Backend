@@ -13,8 +13,17 @@ const bodyParser = require("body-parser");
 const connectDB = require("./src/config/config");
 const app = express();
 
+const http = require('http');
+
+const hostname = '127.0.0.1';
 
 const PORT = process.env.PORT || 5000;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World');
+});
 
 app.use(cors());
 app.use(bodyParser.json())
@@ -30,6 +39,21 @@ app.use("/discussions", DiscussionAPI)
 app.use("/requests", RequestMeetingAPI)
 app.use("/users", UserAPI)
 
-app.listen(PORT, () => {
-  console.log(`App listening at http://localhost:${PORT}`);
+server.listen(PORT, hostname, () => {
+  console.log(`Server running at http://${hostname}:${PORT}/`);
 });
+
+// const http = require('http');
+
+// const hostname = '127.0.0.1';
+// const port = 3000;
+
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'text/plain');
+//   res.end('Hello World');
+// });
+
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
